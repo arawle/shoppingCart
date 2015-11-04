@@ -3,15 +3,15 @@ var app = angular.module('myapp');
 app.controller('ShoppingCartController', ['$scope', 'TeaDataFactory', 'ShoppingCart', function($scope, TeaDataFactory, ShoppingCart){
   $scope.teaData = TeaDataFactory;
   $scope.totalItems
+  $scope.cart = {}
 
-  $scope.add = function(id, tea, scope){
+  $scope.add = function(tea){
     ShoppingCart.addTea(tea);
-    $scope.totalItemCount()
   };
 
   $scope.totalItemCount = function(){
     $scope.totalItems = ShoppingCart.numberOfItems()
-  }
+  };
 
 }]);
 

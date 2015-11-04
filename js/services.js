@@ -6,27 +6,23 @@ app.factory('ShoppingCart', function(){
   ShoppingCart.cartContents = []
 
   ShoppingCart.addTea = function(tea){
-    if (tea.quantity == undefined){
-      tea.quantity = 1;
-    };
-
     if (ShoppingCart.numberOfItems() > 0){
-      for (cartContents in ShoppingCart.cartContents){
-        console.log('one')
-        if (this.cartContents[0]._id == tea.id) {
-          console.log('two')
-          this.cartContents[0].quantity = (parseInt(this.cartContents[0].quantity) + parseInt(tea.quantity))
+      console.log(ShoppingCart.cartContents.length)
+      for (var i = 0; i < ShoppingCart.cartContents.length; i ++){
+        if (ShoppingCart.cartContents[i]._id == tea._id){
+          console.log('one' + ShoppingCart.cartContents[i].quantity)
+          console.log('two' + tea.quantity)
+          ShoppingCart.cartContents[i].quantity = parseInt(ShoppingCart.cartContents[i].quantity) + parseInt(tea.quantity);
           ShoppingCart.numberOfItems()
-          tea.subtotal = ShoppingCart.subtotal(this.cartContents[0].quantity, tea.price);
+          ShoppingCart.cartContents[i].subtotal = ShoppingCart.subtotal(ShoppingCart.cartContents[i].quantity, tea.price);
         } else {
-          console.log('three')
           ShoppingCart.cartContents.push(tea)
           ShoppingCart.numberOfItems()
           tea.subtotal = ShoppingCart.subtotal(tea.quantity, tea.price);
         }
       }
     } else {
-      console.log('four')
+
       ShoppingCart.cartContents.push(tea)
       ShoppingCart.numberOfItems()
       tea.subtotal = ShoppingCart.subtotal(tea.quantity, tea.price);
@@ -54,7 +50,6 @@ app.factory('ShoppingCart', function(){
     // quantity = tea.quantity
     tea.subtotal = ShoppingCart.subtotal(tea.quantity, tea.price)
   };
-
 
   return ShoppingCart;
 });
