@@ -1,0 +1,67 @@
+<div data-ng-init="totalItemCount()"></div>
+<div class='col-md-10 col-md-offset-1'>
+  <div class='row searches'>
+    <div class='col-lg-10'>
+      Search by Category:
+        <select name="singleSelect" ng-model="searchByCategory.categories">
+          <option value=''>All</option>
+          <option value='awesome'>Awesome</option>
+          <option value='cold'>Cold</option>
+          <option value='dark'>Dark</option>
+          <option value='dry'>Dry</option>
+          <option value='hot'>Hot</option>
+          <option value='lucid'>Lucid</option>
+          <option value='spring'>Spring</option>
+          <option value='summer'>Summer</option>
+          <option value='warm'>Warm</option>
+          <option value='winter'>Winter</option>
+        </select>
+       Search by Name: <input type="text" ng-model="searchByName.name"/>
+        <input type="radio" ng-model='sortOrder' value="-price"/> Ascending
+        <input type="radio" ng-model='sortOrder' value="price"/> Descending
+    </div>
+    <button class='col-lg-2'><a href='/cart'>Checkout | Bag: {{totalItems}}</a></button>
+  </div>
+  <div ng-repeat="tea in teaData | filter:searchByName | filter: searchByCategory | orderBy: sortOrder">
+    <div class='row teas'>
+      <div class="col-lg-3">
+        <img src="{{tea.imageUrl}}">
+      </div>
+      <div class='col-lg-6'>
+        <h3>{{tea.name}}</h3>
+        <b>Price: </b>{{tea.price | currency}}<br/>
+        <b>Caffeine Scale: </b>{{tea.caffeineScale}}<br/>
+        <b>Ingredients: </b>{{tea.ingredients}}<br/>
+        <b>Rating: </b>{{tea.rating}}</br>
+        <b>In Stock?: </b>
+          <span ng-show="{{tea.inStock}} == true">Yes</span>
+          <span ng-show="{{tea.inStock}} == false">No</span>
+          </br>
+        <b>Categories</b>
+        <div ng-repeat="category in tea.categories">
+          <span class='catSpan'>{{category}}<span>
+        </div>
+      </div>
+      <div name='cart' class='col-lg-3'>
+        <br/>
+        <form>
+        Quantity:
+          <select ng-model='tea.quantity'>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+            <option value='6'>6</option>
+            <option value='7'>7</option>
+            <option value='8'>8</option>
+            <option value='9'>9</option>
+            <option value='10'>10</option>
+          </select>
+          <input type="text" ng-model="tea.subtotal" hidden />
+          <input type="submit" ng-click='add(tea._id, tea, this)' value='Add to Cart'/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class='col-md-10 col-md-offset-1'>
+    <div class='row searches'>
+      <div class='col-lg-2'>
+        <a href='/'>Continue Shopping</a>
+      </div>
+      <div class='col-lg-offset-10'>
+        Total: {{total | currency}}
+      </div>
+    </div>
+  <div ng-repeat="tea in cart track by $index">
+    <div class='row teas'>
+      <div class="col-lg-3">
+        <img src="{{tea.imageUrl}}">
+      </div>
+      <div class='col-lg-6'>
+        <h3>{{tea.name}}</h3>
+        <b>Price: </b>{{tea.price | currency}}<br/>
+        <b>Caffeine Scale: </b>{{tea.caffeineScale}}<br/>
+        <b>Ingredients: </b>{{tea.ingredients}}<br/>
+        <b>Rating: </b>{{tea.rating}}</br>
+        <b>In Stock?: </b>
+          <span ng-show="{{tea.inStock}} == true">Yes</span>
+          <span ng-show="{{tea.inStock}} == false">No</span>
+          </br>
+        <b>Categories</b>
+        <div ng-repeat="category in tea.categories">
+          <span class='catSpan'>{{category}}<span>
+        </div>
+      </div>
+      <div name='cart' class='col-lg-3'>
+        <br/>
+        <form>
+          Quantity:
+          <select ng-model='tea.quantity'>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+            <option value='6'>6</option>
+            <option value='7'>7</option>
+            <option value='8'>8</option>
+            <option value='9'>9</option>
+            <option value='10'>10</option>
+          </select>
+        <input type="submit" ng-click='updateQuantity(tea)' value='Change Quantity' />
+        </form>
+      </div>
+    <div class='row'></div>
+      <div class='col-lg-offset-10'>
+        Subtotal: {{tea.subtotal | currency}}
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
