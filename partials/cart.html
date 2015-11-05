@@ -4,7 +4,8 @@
         <a href='/'>Continue Shopping</a>
       </div>
       <div class='col-lg-offset-10'>
-        Total: {{total | currency}}
+        Total: {{total | currency}} |
+        <a ng-click="checkoutCart()"> Checkout</a>
       </div>
     </div>
   <div ng-repeat="tea in cart track by $index">
@@ -31,7 +32,7 @@
         <br/>
         <form>
           Quantity:
-          <select ng-model='cart.quantity'>
+          <select ng-model='tea.quantity'>
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
@@ -43,7 +44,7 @@
             <option value='9'>9</option>
             <option value='10'>10</option>
           </select>
-        <input type="submit" ng-click='updateQuantity(cart)' value='Change Quantity' />
+        <input type="submit" ng-click='updateQuantity(tea)' value='Change Quantity' />
         </form>
       </div>
     <div class='row'></div>

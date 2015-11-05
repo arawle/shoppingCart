@@ -3,38 +3,37 @@ var app = angular.module('myapp');
 app.factory('ShoppingCart', function(){
   var ShoppingCart = {};
 
-  ShoppingCart.cartContents = []
+  ShoppingCart.cartContents = [];
 
   ShoppingCart.addTea = function(tea){
     if (ShoppingCart.numberOfItems() > 0){
-      console.log(ShoppingCart.cartContents.length)
+      console.log(ShoppingCart.cartContents.length);
       for (var i = 0; i < ShoppingCart.cartContents.length; i ++){
         if (ShoppingCart.cartContents[i]._id == tea._id){
-          console.log('one' + ShoppingCart.cartContents[i].quantity)
-          console.log('two' + tea.quantity)
           ShoppingCart.cartContents[i].quantity = parseInt(ShoppingCart.cartContents[i].quantity) + parseInt(tea.quantity);
-          ShoppingCart.numberOfItems()
+          ShoppingCart.numberOfItems();
           ShoppingCart.cartContents[i].subtotal = ShoppingCart.subtotal(ShoppingCart.cartContents[i].quantity, tea.price);
         } else {
-          ShoppingCart.cartContents.push(tea)
-          ShoppingCart.numberOfItems()
+          ShoppingCart.cartContents.push(tea);
+          ShoppingCart.numberOfItems();
           tea.subtotal = ShoppingCart.subtotal(tea.quantity, tea.price);
         }
       }
     } else {
-
-      ShoppingCart.cartContents.push(tea)
-      ShoppingCart.numberOfItems()
-      tea.subtotal = ShoppingCart.subtotal(tea.quantity, tea.price);
-    }
+      var item = angular.merge({}, tea);
+      item.quantity = parseInt(item.quantity, 10);
+      ShoppingCart.cartContents.push(item);
+      ShoppingCart.numberOfItems();
+      item.subtotal = ShoppingCart.subtotal(item.quantity, item.price);
+    };
   };
 
   ShoppingCart.numberOfItems = function(){
-    return ShoppingCart.cartContents.length
+    return ShoppingCart.cartContents.length;
   };
 
   ShoppingCart.subtotal = function(quantity, price){
-    return (quantity*price)
+    return (quantity*price);
   };
 
   ShoppingCart.total = function(){
@@ -46,9 +45,18 @@ app.factory('ShoppingCart', function(){
   };
 
   ShoppingCart.changeQuantity = function(tea){
-    // console.log(tea)
-    // quantity = tea.quantity
-    tea.subtotal = ShoppingCart.subtotal(tea.quantity, tea.price)
+    for (var i = 0; i < ShoppingCart.cartContents.length; i ++){
+      console.log(ShoppingCart.cartContents[i]._id);
+      console.log(ShoppingCart.cartContents[i] === tea);
+      if (ShoppingCart.cartContents[i]._id == tea._id){
+        ShoppingCart.cartContents[i].quantity = parseInt(tea.quantity);
+        ShoppingCart.cartContents[i].subtotal = ShoppingCart.subtotal(tea.quantity, tea.price)
+      };
+    };
+  };
+
+  ShoppingCart.checkout = function () {
+    ShoppingCart = {}
   };
 
   return ShoppingCart;
